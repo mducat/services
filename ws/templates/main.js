@@ -4,7 +4,6 @@ $(document).ready(function(){
         alert('Received: ' + msg.data);
     });
     $('form').submit(function(event) {
-        console.log('hey');
         socket.emit('add_to_queue', {data: $('#data').val()});
         return false;
     });

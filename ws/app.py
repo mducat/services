@@ -17,8 +17,6 @@ def index():
     return render_template('index.html')
 
 def process(data):
-    print(data)
-    print(client.process(data))
     return client.process(data)
 
 @ws.on('add_to_queue', '/ws')
