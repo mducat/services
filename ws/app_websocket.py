@@ -6,31 +6,26 @@ import socketio
 from conn import QueueClient
 
 
-aio_app = aiohttp.web.Application()
-sio = socketio.AsyncServer(cors_allowed_origins='*')
-
-client = QueueClient()
-
-
 class Namespace(socketio.AsyncNamespace):
 
     def __init__(self):
-        super(Namespace, self).__init__(namespace='/ws')
+        super(Namespace, self).__init__(namespace='/')
+
+        self.client = QueueClient()
 
     @staticmethod
-    def process(data):
-        return client.process(data)
-
-    @staticmethod
-    async def on_connect(*_):
-        print(_)
+    async def on_connect(sid, *_):
+        print(sid)
 
     async def on_add_to_queue(self, sid, data):
-        print('to', sid, flush=True)
-        await sio.emit('processed', data={'data': self.process(data['data'])}, to=sid)
+        await sio.emit('processed', data={'data': self.client.process(data['data'])}, to=sid, namespace='/')
 
 
 if __name__ == "__main__":
+
+    aio_app = aiohttp.web.Application()
+    sio = socketio.AsyncServer(cors_allowed_origins='*')
+
     n = Namespace()
     sio.register_namespace(n)
     sio.attach(aio_app)

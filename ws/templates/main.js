@@ -1,7 +1,7 @@
 $(document).ready(function(){
-    var socket = io.connect('http://' + document.domain + ':8000/ws');
+    var socket = io.connect('http://' + document.domain + ':8000/');
+
     socket.on('processed', function(msg) {
-        console.log('hey');
         alert('Received: ' + msg.data);
     });
     $('form').submit(function(event) {
