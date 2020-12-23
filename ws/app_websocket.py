@@ -3,7 +3,7 @@
 import aiohttp.web
 import socketio
 
-from ws.conn import QueueClient
+from queue.nats_queue import QueueClient
 
 
 class Namespace(socketio.AsyncNamespace):

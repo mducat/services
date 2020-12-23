@@ -3,6 +3,7 @@
 import pika
 import uuid
 
+
 class QueueClient():
 
     def __init__(self):
@@ -20,6 +21,8 @@ class QueueClient():
             auto_ack=True)
         
     def handle(self, ch, method, props, body):
+        props
+        body
         if self.correlation == props.correlation_id:
             self.response = body
         pass

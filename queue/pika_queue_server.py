@@ -10,6 +10,7 @@ channel = connection.channel()
 channel.queue_declare(queue='queue')
 
 def simple_process(data):
+    data
     return data[::-1]
 
 def handle(ch, method, props, body):
