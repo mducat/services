@@ -1,6 +1,7 @@
 $(document).ready(function(){
-    var socket = io.connect('http://' + document.domain + ':' + location.port + '/ws');
+    var socket = io.connect('http://' + document.domain + ':8000/ws');
     socket.on('processed', function(msg) {
+        console.log('hey');
         alert('Received: ' + msg.data);
     });
     $('form').submit(function(event) {

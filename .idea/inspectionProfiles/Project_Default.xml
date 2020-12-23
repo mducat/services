@@ -1,0 +1,40 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyMethodParametersInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="5">
+            <item index="0" class="java.lang.String" itemvalue="nn" />
+            <item index="1" class="java.lang.String" itemvalue="data" />
+            <item index="2" class="java.lang.String" itemvalue="gevent_socketio" />
+            <item index="3" class="java.lang.String" itemvalue="augmentation" />
+            <item index="4" class="java.lang.String" itemvalue="skimage" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E722" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="tests.lib.unit_test.Test.__getitem__" />
+          <option value="example.example.*" />
+          <option value="int.total_seconds" />
+          <option value="tests_v2.start_tests.TermCol.*" />
+          <option value="tests_v2.lib.term_col.TermCol.*" />
+          <option value="tests_v2.lib.utils.TermCol.*" />
+          <option value="tests.lib.utils.TermCol.*" />
+          <option value="asyncio.locks.Event.__getitem__" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
