@@ -1,9 +1,9 @@
 import asyncio
+import nats.aio.client
 
 
 class ProcessService:
     def __init__(self):
-        import nats.aio.client
         self.nats = nats.aio.client.Client()
 
     async def init(self):
@@ -12,5 +12,7 @@ class ProcessService:
 
     async def process(self, msg):
         print("1", msg)
+        reverted = str.encode(msg.data.decode()[::-1])
+        print("reverted", reverted)
         await self.nats.connect("demo.nats.io:4222", loop=asyncio.get_event_loop())
-        await self.nats.publish(msg.subject, msg.data[::-1])
+        await self.nats.publish(msg.reply, reverted)

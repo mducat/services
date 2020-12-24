@@ -1,4 +1,5 @@
 import asyncio
+import nats.aio.client
 
 from services.nats_process_service import ProcessService
 
@@ -6,7 +7,6 @@ from services.nats_process_service import ProcessService
 class QueueClient:
     def __init__(self):
         self.process_service = ProcessService()
-        import nats.aio.client
         self.nats = nats.aio.client.Client()
 
     async def subscribe(self):
@@ -25,6 +25,6 @@ class QueueClient:
 
         response = None
         while not response:
-            response = await self.nats.request("process", str.encode(data))
+            response = await self.nats.request("process", str.encode(data), timeout=0.5)
 
         return response
