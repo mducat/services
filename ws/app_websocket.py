@@ -1,9 +1,8 @@
-#!/bin/python
-
-import aiohttp.web
 import socketio
+import aiohttp.web
 
-from queue.nats_queue import QueueClient
+
+from services.nats_queue import QueueClient
 
 
 class Namespace(socketio.AsyncNamespace):
@@ -18,7 +17,11 @@ class Namespace(socketio.AsyncNamespace):
         print(sid)
 
     async def on_add_to_queue(self, sid, data):
-        await sio.emit('processed', data={'data': self.client.process(data['data'])}, to=sid, namespace='/')
+        print("ICI", data['data'])
+        processed = await self.client.process(data['data'])
+        print("processed", processed)
+        # processed = data
+        await sio.emit('processed', data={'data': processed}, to=sid, namespace='/')
 
 
 if __name__ == "__main__":
