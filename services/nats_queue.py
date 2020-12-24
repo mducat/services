@@ -1,30 +1,30 @@
 import asyncio
 import nats.aio.client
 
-from services.nats_process_service import ProcessService
-
 
 class QueueClient:
     def __init__(self):
-        self.process_service = ProcessService()
         self.nats = nats.aio.client.Client()
+        self.loop = asyncio.get_event_loop()
+        self._future_resp = asyncio.Future()
 
-    async def subscribe(self):
-        await self.nats.subscribe("process", cb=self.process_service.process)
+    def run(self):
+        self.loop.create_task(self.init())
+        try:
+            self.loop.run_forever()
+        except KeyboardInterrupt:
+            pass
 
     async def init(self):
         await self.nats.connect("demo.nats.io:4222", loop=asyncio.get_event_loop())
-        # self.process_service = self.process_service.init()
-        await self.subscribe()
-        return self
+        await self.nats.subscribe("reverted", cb=self.identity)
+
+    async def identity(self, msg):
+        self._future_resp.set_result(msg.data.decode())
 
     async def process(self, data):
-        await self.init()
+        await self.nats.publish("process", str.encode(data))
 
-        # await self.nats.publish("process", str.encode(data))
-
-        response = None
-        while not response:
-            response = await self.nats.request("process", str.encode(data), timeout=0.5)
-
-        return response
+        resp = await self._future_resp
+        self._future_resp = asyncio.Future()
+        return resp
